@@ -60,13 +60,16 @@ if option == 'Single image':
 
 elif option == 'Multiple image':
     uploaded_file = st.file_uploader(' ',accept_multiple_files = True)
-    if len(uploaded_file) != 0:
-        st.write("Images Uploaded Successfully")
-        # Perform your Manupilations (In my Case applying Filters)
-        for i in range(len(uploaded_file)):
-            pred_mask = predict(uploaded_file[i].name, model, False)
-            st.image(uploaded_file[i])
-            st.image(pred_mask)
+    if uploaded_file is not None:   
+        if len(uploaded_file) != 0:
+            st.write("Images Uploaded Successfully")
+            # Perform your Manupilations (In my Case applying Filters)
+            for i in range(len(uploaded_file)):
+                file_bytes = np.asarray(bytearray(uploaded_file[i].read()), dtype=np.uint8)
+                opencv_image = cv2.imdecode(file_bytes, 1)
+                pred_mask = predict(opencv_image, model, False)
+                st.image(opencv_image)
+                st.image(pred_mask)
             
 else:
     st.write("Make sure you image is in TIF/JPG/PNG Format.")
