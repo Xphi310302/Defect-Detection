@@ -15,7 +15,7 @@ def binarize_custom(masks, th = 0.1):
 
 def predict(path, model, show_img = False):
     # name = path.split('/')[-1]
-
+    print(path)
     img_gray = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
     if img_gray is None:
         print("Cant read image")
@@ -47,10 +47,12 @@ option = st.radio('',('Single image', 'Multiple image'))
 st.write('You selected:', option)
 
 if option == 'Single image':
-    uploaded_file = st.file_uploader(' ',accept_multiple_files = False)
-    print(uploaded_file.name)
+    uploaded_file = st.file_uploader(' ',accept_multiple_files = False, label_visibility = "hidden")
+
     if uploaded_file is not None:
+        print("name: ",uploaded_file.name)
         pred_mask = predict(uploaded_file.name, model, False)
+        print(uploaded_file.name)
         st.image(uploaded_file)
         st.image(pred_mask)
 
