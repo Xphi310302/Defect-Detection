@@ -17,7 +17,7 @@ def predict(path, model, show_img = False):
     # name = path.split('/')[-1]
 
     img_gray = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-    img_resized = cv2.resize(img_gray, (1600, 256))
+    img_gray = cv2.resize(img_gray, (1600, 256))
     img_ = img_gray[..., np.newaxis]    # Add channel axis
     img_ = img_[np.newaxis, ...]    # Add batch axis
     img_ = img_ / 255.              # 0～1
