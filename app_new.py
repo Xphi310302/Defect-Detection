@@ -53,9 +53,10 @@ if option == 'Single image':
     if uploaded_file is not None:   
         file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
         opencv_image = cv2.imdecode(file_bytes, 1)
+        img_RGB = cv2.cvtColor(opencv_image, cv2.COLOR_BGR2GRAY)
         pred_mask = predict(opencv_image, model, False)
         print(uploaded_file.name)
-        st.image(uploaded_file)
+        st.image(img_RGB)
         st.image(pred_mask)
 
 elif option == 'Multiple image':
@@ -67,8 +68,9 @@ elif option == 'Multiple image':
             for i in range(len(uploaded_file)):
                 file_bytes = np.asarray(bytearray(uploaded_file[i].read()), dtype=np.uint8)
                 opencv_image = cv2.imdecode(file_bytes, 1)
+                
                 pred_mask = predict(opencv_image, model, False)
-                st.image(opencv_image)
+                st.image(uploaded_file[i])
                 st.image(pred_mask)
             
 else:
