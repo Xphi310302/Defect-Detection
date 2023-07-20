@@ -17,7 +17,7 @@ def predict(path, model, show_img = False):
     # name = path.split('/')[-1]
 
     img_gray = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-    if img is None:
+    if img_gray is None:
         print("Cant read image")
     else:
         img_gray = cv2.resize(img_gray, (1600, 256))
