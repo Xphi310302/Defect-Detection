@@ -37,8 +37,10 @@ def predict(path, model, show_img = False):
             return pred_mask
         
 
-unet = Vanila_Unet()
-model = unet.model_gen()
+model = None
+if model is None:
+    unet = Vanila_Unet()
+    model = unet.model_gen()
 st.title('STEEL DEFECT DETECTION APPLICATION')
 st.markdown("***")
 
