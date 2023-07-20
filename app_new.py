@@ -17,22 +17,25 @@ def predict(path, model, show_img = False):
     # name = path.split('/')[-1]
 
     img_gray = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-    img_gray = cv2.resize(img_gray, (1600, 256))
-    img_ = img_gray[..., np.newaxis]    # Add channel axis
-    img_ = img_[np.newaxis, ...]    # Add batch axis
-    img_ = img_ / 255.              # 0～1
-    
-    masks = model.predict(img_)
-    pred_mask = masks[0,:,:,0]
-    for i in range(1,4):
-        pred_mask +=  masks[0,:,:,i]
-    pred_mask = binarize_custom(pred_mask, 0.1)
-    if show_img:
-        img = cv2.imread(path)
-        return img, pred_mask
-    else: 
-        return pred_mask
-    
+    if img is None:
+        print("Cant read image")
+    else:
+        img_gray = cv2.resize(img_gray, (1600, 256))
+        img_ = img_gray[..., np.newaxis]    # Add channel axis
+        img_ = img_[np.newaxis, ...]    # Add batch axis
+        img_ = img_ / 255.              # 0～1
+        
+        masks = model.predict(img_)
+        pred_mask = masks[0,:,:,0]
+        for i in range(1,4):
+            pred_mask +=  masks[0,:,:,i]
+        pred_mask = binarize_custom(pred_mask, 0.1)
+        if show_img:
+            img = cv2.imread(path)
+            return img, pred_mask
+        else: 
+            return pred_mask
+        
 
 unet = Vanila_Unet()
 model = unet.model_gen()
