@@ -48,6 +48,7 @@ st.write('You selected:', option)
 
 if option == 'Single image':
     uploaded_file = st.file_uploader(' ',accept_multiple_files = False)
+    print(uploaded_file.name)
     if uploaded_file is not None:
         pred_mask = predict(uploaded_file.name, model, False)
         st.image(uploaded_file)
